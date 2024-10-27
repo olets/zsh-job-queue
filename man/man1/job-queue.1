@@ -1,0 +1,37 @@
+.TH "ZSH-JOB-QUEUE" 1 "May 18 2024" "job-queue 5.7.1" "User Commands"
+.SH NAME
+zsh\-job-queue \- manage a cross-session job queue
+.SH SYNOPSIS
+
+For full manual including options, see https://zsh-job-queue.olets.dev/
+
+\fBabbr get\-name\fR
+
+\fBabbr pop\fR <\fIcommand\fR> <\fIname\fR>
+
+\fBabbr push\fR <\fIcommand\fR> <\fIname\fR> <\fIdescription\fR> [<\fInew support ticket url\fR>]
+
+.SH DESCRIPTION
+\fBjob-queue\fR manages a cross-session job queue.
+
+.SH Commands
+The following commands are available:
+
+.IP \(bu
+\fBget\-name\fR
+
+Returns a UUID.
+
+.IP \(bu
+\fBabbr pop\fR <\fIcommand\fR> <\fIname\fR>
+
+Removes a job from the queue.
+
+.IP \(bu
+\fBabbr push\fR <\fIcommand\fR> <\fIname\fR> <\fIdescription\fR> [<\fInew support ticket url\fR>]
+
+Adds a job to the queue.
+
+.SH AUTHORS
+
+Henry Bley\-Vroman <olets@olets.dev>

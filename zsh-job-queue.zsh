@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 
+# Cross-session job queue manager for zsh
 # https://github.com/olets/zsh-job-queue
+# v1.0.0-beta.1
+# Copyright (c) 2024-present Henry Bley-Vroman
 
 # Log debugging messages?
 typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
@@ -10,11 +13,16 @@ if [[ ${(%):-%#} == '#' ]]; then
   _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}%/}/
 fi
 
-# _job_queue:pop
 _job_queue:debugger() {
   emulate -LR zsh
 
   (( JOB_QUEUE_DEBUG )) && 'builtin' 'echo' - $funcstack[2]
+}
+
+function _job_queue:help() {
+  emulate -LR zsh
+
+  'command' 'man' job-queue 2>/dev/null || 'command' 'man' ${0:A:h}/man/man1/job-queue.1
 }
 
 # _job_queue:pop
@@ -135,11 +143,27 @@ function _job_queue:get-name() {
   'builtin' 'echo' $EPOCHREALTIME
 }
 
+function _job_queue:version() {
+  emulate -LR zsh
+
+  'builtin' 'printf' "zsh-job-queue version %s\n" 1.0.0-beta.1
+}
+
 function job-queue() {
   emulate -LR zsh
 
   for opt in "$@"; do
     case $opt in
+      --help|\
+      help)
+        _job_queue:help
+        return
+        ;;
+      --version|\
+      -v)
+        _job_queue:version
+        return
+        ;;
       get-name)
         _job_queue:get-name
         return

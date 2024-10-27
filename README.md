@@ -2,6 +2,8 @@
 
 **zsh-job-queue** manages a cross-session job queue.
 
+Run `job-queue help` for documentation; if the package is installed with Homebrew, `man job-queue` is also available.
+
 ## Contributing
 
 _Looking for the documentation site's source? See <https://github.com/olets/zsh-job-queue-docs>_

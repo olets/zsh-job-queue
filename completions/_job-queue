@@ -1,0 +1,37 @@
+#compdef job-queue
+# -------------------------------
+#  Completion script for zsh-job-queue
+#
+# https://github.com/olets/zsh-job-queue
+# v1.0.0-beta.1
+# Copyright (c) 2024-present Henry Bley-Vroman
+#
+# Licensed under the same license as zsh-job-queue. See zsh-job-queue's LICENSE file
+#
+# -------------------------------
+  
+local line state
+local -i ret
+  
+ret=1
+  
+_arguments -C \
+  '1: :->cmds' \
+  '*:: :->args' \
+  && ret=0
+  
+case $state in
+  cmds)
+    _values "job-queue command" \
+      "get-name[Return a UUID]" \
+      "pop[Remove a job from the queue]" \
+      "push[Adds a job to the queue]" \
+      "help[Show the manpage.]" \
+      "--help[Show the manpage.]" \
+      "-v[Show the current version.]" \
+      "--version[Show the current version.]"
+    ret=0
+    ;;
+esac
+  
+return ret
