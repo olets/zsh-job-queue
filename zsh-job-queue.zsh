@@ -95,7 +95,7 @@ function _job_queue:push() {
 
       next_job_path=$_job_queue_tmpdir${cmd}/$next_job_name
 
-      'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${next_job_name%%.*}) has timed out."
+      'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_name%%-*}%%.*}) has timed out."
       'builtin' 'echo' "The job was related to \`$cmd\`'s \`$(cat $next_job_path)\`."
       'builtin' 'echo' "This could be the result of manually terminating an activity in \`$cmd\`."
 
@@ -115,7 +115,7 @@ function _job_queue:push() {
       while [[ $next_job_name != $job_name ]]; do
         next_job_name=$(_job_queue:push:next_job_name)
 
-        next_job_age=$(( $EPOCHREALTIME - ${next_job_name%-*} ))
+        next_job_age=$(( $EPOCHREALTIME - ${next_job_name%%-*} ))
 
         if ((  $next_job_age > $timeout_age )); then
           _job_queue:push:handle_timeout
@@ -139,8 +139,16 @@ function _job_queue:get-name() {
   emulate -LR zsh
 
   # cannot support debug message
+  
+  local uuid
 
-  'builtin' 'echo' $EPOCHREALTIME
+  'command' 'uuidgen' && {
+    uuid=$(uuidgen)
+  } || {
+    uuid=$(cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
+  }
+
+  'builtin' 'echo' $EPOCHREALTIME--$uuid
 }
 
 function _job_queue:version() {
@@ -179,7 +187,7 @@ function job-queue() {
         return
         ;;
       *)
-        'builtin' 'echo' "Invalid option: $opt"
+        'builtin' 'echo' "job-queue: Invalid option $opt"
         return 1
         ;;
     esac
