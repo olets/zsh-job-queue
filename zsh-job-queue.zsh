@@ -57,7 +57,6 @@ function _job_queue:push() {
 
     local cmd
     local next_job_age
-    local next_job_id
     local next_job_path
     local job_description
     local job_id
@@ -86,14 +85,16 @@ function _job_queue:push() {
     function _job_queue:push:next_job_id() {
       # cannot support debug message
 
-      'command' 'ls' -t $_job_queue_tmpdir${cmd} | tail -1
+      'command' 'ls' -t $1$2 | tail -1
     }
 
     # gets unfunction'd
     function _job_queue:push:handle_timeout() {
       _job_queue:debugger
 
-      _job_queue:push:remove_scheduled_event
+      _job_queue:push:remove_scheduled_event $job_id
+      # unfunction -m _job_queue:push:wait_turn:$job_id
+      _job_queue:push:unfunction
 
       next_job_path=$_job_queue_tmpdir${cmd}/$next_job_id
 
@@ -112,41 +113,88 @@ function _job_queue:push() {
 
     function _job_queue:push:remove_scheduled_event() {
       _job_queue:debugger
+
+      local job_id=$1 # overrides _job_queue:push - scope `job_id`
+      printf "looking for scheduled event _job_queue:push:wait_turn:%s\n" $job_id
       
       typeset -i i=${"${(@)zsh_scheduled_events#*:*:}"[(I)_job_queue:push:wait_turn:$job_id]}
-      (( i )) && sched -$i
+      (( i )) && {
+        printf "removing scheduled event %s\n" $i
+        sched -$i
+      }
     }
 
     # gets unfunction'd
-    function _job_queue:push:wait_turn() {
+    function _job_queue:push:wait_turn:$job_id() {
       _job_queue:debugger
 
-      while [[ $next_job_id != $job_id ]]; do
-        _job_queue:push:remove_scheduled_event
+      # echo _job_queue_tmpdir $_job_queue_tmpdir
 
-        next_job_id=$(_job_queue:push:next_job_id)
+      local job_id=$1 # overrides _job_queue:push - scope `job_id`
+      local _job_queue_tmpdir=$2 # overrides _job_queue:push - scope `_job_queue_tmpdir`
+      local cmd=$3 # overrides _job_queue:push - scope `cmd`
+      local next_job_id
+      printf "waiting for %s's turn\n" $job_id
 
-        next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
+      _job_queue:push:remove_scheduled_event $job_id
 
-        if ((  $next_job_age > $timeout_age )); then
-          _job_queue:push:handle_timeout $job_id
-          return 1
-        fi
+      next_job_id=$(_job_queue:push:next_job_id $_job_queue_tmpdir $cmd)
 
-        [[ $next_job_id != $job_id ]] && {
-          sched +1 _job_queue:push:wait_turn:$job_id
-        }
+      # (( ! next_job_id )) && {
+      #   echo result $(ls -t /var/folders/s8/nr0t3q7954j64nq3by9804xw0000gn/T/zsh-job-queue/zsh-abbr | tail -1)
+      #   printf "%s isn't a time" $next_job_id
+      #   return
+      # }
 
-      done
+      [[ $next_job_id == $job_id ]] && {
+        echo my turn
+        _job_queue:push:unfunction
+        return
+      } || {
+        printf "it is %s's turn\n" $next_job_id
+      }
+
+      # [[ $next_job_id ]]
+
+      # echo - ----
+      # echo - next_job_id: $next_job_id
+      # echo - lsing: 'command' 'ls' -t $_job_queue_tmpdir$cmd | tail -1
+      # echo - lsing: $('command' 'ls' -t $_job_queue_tmpdir$cmd | tail -1)
+      # echo x
+      # echo - next_job_age =  $EPOCHREALTIME - ${next_job_id%%-*}
+      # echo x
+
+      next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
+
+      printf "%s is %s seconds old\n" $next_job_id $next_job_age
+
+      if ((  $next_job_age > $timeout_age )); then
+        printf "that's too old\n"
+        _job_queue:push:handle_timeout $job_id $_job_queue_tmpdir $cmd $next_job_id
+        return 1
+      fi
+
+      local -i delay
+      delay=10
+      printf "try again in %s seconds\n" $delay
+      sched +$delay _job_queue:push:wait_turn:$job_id $job_id $_job_queue_tmpdir $cmd
+    }
+
+    _job_queue:push:unfunction() {
+      _job_queue:debugger
+
+      unfunction -m _job_queue:push:add_job
+      unfunction -m _job_queue:push:next_job_id
+      unfunction -m _job_queue:push:handle_timeout
+      unfunction -m _job_queue:push:wait_turn:$job_id
     }
 
     _job_queue:push:add_job
-    _job_queue:push:wait_turn
+    _job_queue:push:wait_turn:$job_id $job_id $_job_queue_tmpdir $cmd
   } always {
-    unfunction -m _job_queue:push:add_job
-    unfunction -m _job_queue:push:next_job_id
-    unfunction -m _job_queue:push:handle_timeout
-    unfunction -m _job_queue:push:wait_turn
+    # unfunction -m _job_queue:push:add_job
+    # unfunction -m _job_queue:push:next_job_id
+    # unfunction -m _job_queue:push:handle_timeout
   }
 }
 
