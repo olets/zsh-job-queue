@@ -93,6 +93,8 @@ function _job_queue:push() {
     function _job_queue:push:handle_timeout() {
       _job_queue:debugger
 
+      _job_queue:push:remove_scheduled_event
+
       next_job_path=$_job_queue_tmpdir${cmd}/$next_job_id
 
       'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
@@ -108,20 +110,33 @@ function _job_queue:push() {
       'command' 'rm' $next_job_path &>/dev/null
     }
 
+    function _job_queue:push:remove_scheduled_event() {
+      _job_queue:debugger
+      
+      typeset -i i=${"${(@)zsh_scheduled_events#*:*:}"[(I)_job_queue:push:wait_turn:$job_id]}
+      (( i )) && sched -$i
+    }
+
     # gets unfunction'd
     function _job_queue:push:wait_turn() {
-      next_job_id=$(_job_queue:push:next_job_id)
+      _job_queue:debugger
 
       while [[ $next_job_id != $job_id ]]; do
+        _job_queue:push:remove_scheduled_event
+
         next_job_id=$(_job_queue:push:next_job_id)
 
         next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
 
         if ((  $next_job_age > $timeout_age )); then
-          _job_queue:push:handle_timeout
+          _job_queue:push:handle_timeout $job_id
+          return 1
         fi
 
-        sleep 0.01
+        [[ $next_job_id != $job_id ]] && {
+          sched +1 _job_queue:push:wait_turn:$job_id
+        }
+
       done
     }
 
@@ -190,4 +205,5 @@ function job-queue() {
   done
 }
 
+zmodload -i zsh/sched
 job-queue
