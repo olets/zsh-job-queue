@@ -28,25 +28,25 @@ function _job_queue:help() {
 # _job_queue:pop
 #
 # @param {string} cmd
-# @param {string} job_name
+# @param {string} job_id
 function _job_queue:pop() {
   emulate -LR zsh
 
   _job_queue:debugger
 
   local cmd
-  local job_name
+  local job_id
 
   cmd=$1 # todo
-  job_name=$2
+  job_id=$2
 
-  'command' 'rm' $_job_queue_tmpdir${cmd}/$job_name &>/dev/null
+  'command' 'rm' $_job_queue_tmpdir${cmd}/$job_id &>/dev/null
 }
 
 # _job_queue:push
 #
 # @param {string} cmd
-# @param {string} job_name
+# @param {string} job_id
 # @param {string} job_description
 # @param {string} support_ticket_url
 function _job_queue:push() {
@@ -57,16 +57,16 @@ function _job_queue:push() {
 
     local cmd
     local next_job_age
-    local next_job_name
+    local next_job_id
     local next_job_path
     local job_description
-    local job_name
+    local job_id
     local job_path
     local support_ticket_url
     local timeout_age
 
     cmd=$1
-    job_name=$2
+    job_id=$2
     job_description=$3
     support_ticket_url=$4
     timeout_age=30 # seconds
@@ -79,11 +79,11 @@ function _job_queue:push() {
         mkdir -p $_job_queue_tmpdir${cmd}
       fi
 
-      'builtin' 'echo' $job_description > $_job_queue_tmpdir${cmd}/$job_name
+      'builtin' 'echo' $job_description > $_job_queue_tmpdir${cmd}/$job_id
     }
 
     # gets unfunction'd
-    function _job_queue:push:next_job_name() {
+    function _job_queue:push:next_job_id() {
       # cannot support debug message
 
       'command' 'ls' -t $_job_queue_tmpdir${cmd} | tail -1
@@ -93,9 +93,9 @@ function _job_queue:push() {
     function _job_queue:push:handle_timeout() {
       _job_queue:debugger
 
-      next_job_path=$_job_queue_tmpdir${cmd}/$next_job_name
+      next_job_path=$_job_queue_tmpdir${cmd}/$next_job_id
 
-      'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_name%%-*}%%.*}) has timed out."
+      'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
       'builtin' 'echo' "The job was related to \`$cmd\`'s \`$(cat $next_job_path)\`."
       'builtin' 'echo' "This could be the result of manually terminating an activity in \`$cmd\`."
 
@@ -110,12 +110,12 @@ function _job_queue:push() {
 
     # gets unfunction'd
     function _job_queue:push:wait_turn() {
-      next_job_name=$(_job_queue:push:next_job_name)
+      next_job_id=$(_job_queue:push:next_job_id)
 
-      while [[ $next_job_name != $job_name ]]; do
-        next_job_name=$(_job_queue:push:next_job_name)
+      while [[ $next_job_id != $job_id ]]; do
+        next_job_id=$(_job_queue:push:next_job_id)
 
-        next_job_age=$(( $EPOCHREALTIME - ${next_job_name%%-*} ))
+        next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
 
         if ((  $next_job_age > $timeout_age )); then
           _job_queue:push:handle_timeout
@@ -129,24 +129,20 @@ function _job_queue:push() {
     _job_queue:push:wait_turn
   } always {
     unfunction -m _job_queue:push:add_job
-    unfunction -m _job_queue:push:next_job_name
+    unfunction -m _job_queue:push:next_job_id
     unfunction -m _job_queue:push:handle_timeout
     unfunction -m _job_queue:push:wait_turn
   }
 }
 
-function _job_queue:get-name() {
+function _job_queue:generate-id() {
   emulate -LR zsh
 
   # cannot support debug message
   
   local uuid
 
-  'command' 'uuidgen' && {
-    uuid=$(uuidgen)
-  } || {
-    uuid=$(cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
-  }
+  uuid=$('command' 'uuidgen' 2>/dev/null || cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
 
   'builtin' 'echo' $EPOCHREALTIME--$uuid
 }
@@ -172,8 +168,8 @@ function job-queue() {
         _job_queue:version
         return
         ;;
-      get-name)
-        _job_queue:get-name
+      generate-id)
+        _job_queue:generate-id
         return
         ;;
       pop)
