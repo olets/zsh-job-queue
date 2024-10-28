@@ -2,7 +2,7 @@
 
 # Cross-session job queue manager for zsh
 # https://github.com/olets/zsh-job-queue
-# v1.0.0-beta.1
+# v1.0.0
 # Copyright (c) 2024-present Henry Bley-Vroman
 
 # Log debugging messages?
@@ -150,7 +150,7 @@ function _job_queue:generate-id() {
 function _job_queue:version() {
   emulate -LR zsh
 
-  'builtin' 'printf' "zsh-job-queue version %s\n" 1.0.0-beta.1
+  'builtin' 'printf' "zsh-job-queue version %s\n" 1.0.0
 }
 
 function job-queue() {
