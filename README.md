@@ -1,8 +1,52 @@
 # zsh-job-queue ![GitHub release (latest by date)](https://img.shields.io/github/v/release/olets/zsh-job-queue)
 
-**zsh-job-queue** manages a cross-session job queue.
+**zsh-job-queue** manages a global synchronous job queue.
 
 Run `job-queue help` for documentation; if the package is installed with Homebrew, `man job-queue` is also available.
+
+## Usage
+
+1. Get an id: `job-queue generate-id`.
+2. Start a job with that id: `job-queue push <scope> <generated id>`.
+3. Do some work.
+4. End the job you started: `job-queue pop <scope> <generated id>`.
+
+`job-queue push` has two optional parameters: `job-queue push <scope> <generated id> <description> <new support ticket url>`
+
+## Example
+
+You have a script that modifies a file. You want to support running the script in multiple terminals, in quick succession. You want to make sure that none of the runs' changes are lost.
+
+Don't
+
+```shell
+myfunction() {
+  echo $1 >> ~/myfile.txt # runs immediately
+}
+```
+
+Do
+
+```shell
+myfunction() {
+  local id=$(job-queue generate-id)
+  job-queue push myfunction $id
+  echo $1 >> ~/myfile.txt # waits its turn in the global 'myfunction' queue
+  job-queue pop myfunction $id
+}
+```
+
+## History
+
+Forked from [zsh-abbr v5](https://v5.zsh-abbr.olets.dev/).
+
+## Changelog
+
+See the [CHANGELOG](CHANGELOG.md) file.
+
+## Roadmap
+
+See the [ROADMAP](ROADMAP.md) file.
 
 ## Contributing
 
