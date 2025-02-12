@@ -66,26 +66,26 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
     # _job_queue:pop
     # gets unfunction'd
     #
-    # @param {string} cmd
+    # @param {string} scope
     # @param {string} job_id
     function _job_queue:pop() {
       emulate -LR zsh
 
       _job_queue:debugger
 
-      local cmd
+      local scope
       local job_id
 
-      cmd=$1 # todo
+      scope=$1 # todo
       job_id=$2
 
-      'command' 'rm' $_job_queue_tmpdir${cmd}/$job_id &>/dev/null
+      'command' 'rm' $_job_queue_tmpdir${scope}/$job_id &>/dev/null
     }
 
     # _job_queue:push
     # gets unfunction'd
     #
-    # @param {string} cmd
+    # @param {string} scope
     # @param {string} job_id
     # @param {string} job_description
     # @param {string} support_ticket_url
@@ -95,18 +95,18 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
       {
         _job_queue:debugger
 
-        local cmd
         local next_job_age
         local next_job_id
         local next_job_path
         local job_description
         local job_id
         local job_path
+        local scope
         local support_ticket_url
 
         job_id=$(_job_queue:generate-id)
 
-        cmd=$1
+        scope=$1
         job_description=$2
         support_ticket_url=$3
 
@@ -114,32 +114,32 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         function _job_queue:push:add_job() {
           _job_queue:debugger
 
-          if ! [[ -d $_job_queue_tmpdir${cmd} ]]; then
-            mkdir -p $_job_queue_tmpdir${cmd}
+          if ! [[ -d $_job_queue_tmpdir${scope} ]]; then
+            mkdir -p $_job_queue_tmpdir${scope}
           fi
 
-          'builtin' 'echo' $job_description > $_job_queue_tmpdir${cmd}/$job_id
+          'builtin' 'echo' $job_description > $_job_queue_tmpdir${scope}/$job_id
         }
 
         # gets unfunction'd
         function _job_queue:push:next_job_id() {
           # cannot support debug message
 
-          'command' 'ls' -t $_job_queue_tmpdir${cmd} | tail -1
+          'command' 'ls' -t $_job_queue_tmpdir${scope} | tail -1
         }
 
         # gets unfunction'd
         function _job_queue:push:handle_timeout() {
           _job_queue:debugger
 
-          next_job_path=$_job_queue_tmpdir${cmd}/$next_job_id
+          next_job_path=$_job_queue_tmpdir${scope}/$next_job_id
 
           'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
-          'builtin' 'echo' "The job was related to \`$cmd\`'s \`$(cat $next_job_path)\`."
-          'builtin' 'echo' "This could be the result of manually terminating an activity in \`$cmd\`."
+          'builtin' 'echo' "The job was related to \`$scope\`'s \`$(cat $next_job_path)\`."
+          'builtin' 'echo' "This could be the result of manually terminating an activity in \`$scope\`."
 
           if [[ -n $support_ticket_url ]]; then
-            'builtin' 'echo' "If you believe it reflects bug in \`$cmd\`, please report it at $support_ticket_url"
+            'builtin' 'echo' "If you believe it reflects bug in \`$scope\`, please report it at $support_ticket_url"
           fi
 
           'builtin' 'echo'
