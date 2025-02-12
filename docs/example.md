@@ -29,14 +29,11 @@ Instead, do something like
 
 myfunction() {
   local file=~/myfile.txt
-  local id=$(job-queue generate-id)
   local scope=$funcstack[1] # name of the immediate parent function, here `"myfunction"`
-  job-queue push myfunction $id
+  local id=$(job-queue push myfunction)
 
   # if there any jobs ahead of this one in the 'myfunction' queue
-  # (ahead of is id generated before this one
-  # and job pushed to the queue before this one),
-  # the script pauses here until they have been remove from the queue
+  # the script pauses here until they have been removed from the queue
 
   local content=$(cat $file 2>dev/null)
   rm $file 2>/dev/null

@@ -258,11 +258,28 @@ export default defineConfig({
     },
 
     sidebar: [
-      { text: "Overview", link: "/" },
-      { text: "Installation", link: "/installation" },
-      { text: "Usage", link: "/usage" },
-      { text: "Example", link: "/example" },
-      { text: "Options", link: "/options" },
+      {
+        text: "Overview",
+        collapsed: false,
+        items: [
+          { text: "Introduction", link: "/" },
+          { text: "Installation", link: "/installation" },
+          { text: "What's new?", link: "/whats-new" },
+        ],
+      },
+      {
+        text: "Manual",
+        collapsed: false,
+        items: [
+          { text: "Usage", link: "/usage" },
+          { text: "Example", link: "/example" },
+          { text: "Options", link: "/options" },
+        ],
+      },
+      {
+        link: "/migrating-between-versions.md",
+        text: "Migrating between versions",
+      },
       { text: "Contributing", link: "/contributing" },
     ],
   },
