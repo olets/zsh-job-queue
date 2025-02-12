@@ -102,7 +102,7 @@ function _job_queue:push() {
       if [[ -n $support_ticket_url ]]; then
         'builtin' 'echo' "If you believe it reflects bug in \`$cmd\`, please report it at $support_ticket_url"
       fi
-      
+
       'builtin' 'echo'
 
       'command' 'rm' $next_job_path &>/dev/null
@@ -139,7 +139,7 @@ function _job_queue:generate-id() {
   emulate -LR zsh
 
   # cannot support debug message
-  
+
   local uuid
 
   uuid=$('command' 'uuidgen' 2>/dev/null || cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
