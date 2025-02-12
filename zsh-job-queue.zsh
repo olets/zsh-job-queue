@@ -8,8 +8,7 @@
 # Usage:
 #
 # ```
-# id=$(job-queue generate-id)
-# job-queue push <scope> [<job-description> [<support-ticket-url>]]
+# id=$(job-queue push <scope> [<job-description> [<support-ticket-url>]])
 # # waits for its turn in the <scope> queue
 # # do some work
 # job-queue pop $id
@@ -105,10 +104,11 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         local job_path
         local support_ticket_url
 
+        job_id=$(_job_queue:generate-id)
+
         cmd=$1
-        job_id=$2
-        job_description=$3
-        support_ticket_url=$4
+        job_description=$2
+        support_ticket_url=$3
 
         # gets unfunction'd
         function _job_queue:push:add_job() {
@@ -166,6 +166,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
         _job_queue:push:add_job
         _job_queue:push:wait_turn
+        'builtin' 'echo' - $job_id
       } always {
         unfunction -m _job_queue:push:add_job
         unfunction -m _job_queue:push:next_job_id
