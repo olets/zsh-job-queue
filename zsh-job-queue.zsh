@@ -207,10 +207,6 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           _job_queue:version
           return
           ;;
-        generate-id)
-          _job_queue:generate-id
-          return
-          ;;
         pop)
           shift
           _job_queue:pop $@
