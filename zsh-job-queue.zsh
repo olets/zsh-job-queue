@@ -3,7 +3,7 @@
 # Cross-session job queue manager for zsh
 # https://github.com/olets/zsh-job-queue
 # v1.0.0
-# Copyright (c) 2024-present Henry Bley-Vroman
+# Copyright (c) 2024 Henry Bley-Vroman
 
 # Log debugging messages?
 typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}

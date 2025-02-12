@@ -1,4 +1,4 @@
-zsh-job-queue Copyright (2024-present) (Henry Bley-Vroman)(“Licensor”)
+zsh-job-queue Copyright (2024) (Henry Bley-Vroman)(“Licensor”)
 
 The following summary is informational purposes only, is not exhaustive, and does not
 form part of the license.
