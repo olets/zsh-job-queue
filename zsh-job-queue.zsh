@@ -19,6 +19,8 @@
 # Refer to zsh-abbr for an example of the latter
 
 function _job_queue:init"${1:-}"() { # this quotation mark to fix syntax highlighting "
+  zmodload zsh/datetime
+
   # Log debugging messages?
   typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
 
