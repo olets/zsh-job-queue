@@ -213,4 +213,3 @@ function job-queue() {
 
 _job_queue:init
 unfunction -m _job_queue:init
-job-queue
