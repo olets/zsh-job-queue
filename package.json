@@ -1,0 +1,33 @@
+{
+  "name": "zsh-job-queue-docs",
+  "version": "1.0.0",
+  "description": "Documentation for zsh-job-queue",
+  "packageManager": "bun@1.1.25",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "author": "Henry Bley-Vroman <olets@olets.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olets/zsh-job-queue"
+  },
+  "bugs": {
+    "url": "https://github.com/olets/zsh-job-queue/issues"
+  },
+  "homepage": "https://zsh-job-queue.olets.dev",
+  "keywords": [
+    "zsh",
+    "shell",
+    "queue",
+    "command-line"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.6",
+    "markdown-it-footnote": "^4.0.0",
+    "tailwindcss": "^4.0.6",
+    "vitepress": "^1.6.3"
+  }
+}
