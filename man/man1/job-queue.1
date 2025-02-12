@@ -5,11 +5,13 @@ zsh\-job-queue \- manage a cross-session job queue
 
 For full manual including options, see https://zsh-job-queue.olets.dev/
 
-\fBabbr generate\-id\fR
+\fBjob-queue pop\fR <\fIcommand\fR> <\fIscope\fR> <\fIid\fR>
 
-\fBabbr pop\fR <\fIcommand\fR> <\fIname\fR>
+\fBjob-queue push\fR <\fIcommand\fR> <\fIscope\fR> [<\fIdescription\fR> [<\fInew support ticket url\fR>]]
 
-\fBabbr push\fR <\fIcommand\fR> <\fIname\fR> <\fIdescription\fR> [<\fInew support ticket url\fR>]
+\fBjob-queue\fR (\fBhelp\fR | \fB\-\-help\fR)
+
+\fBjob-queue\fR (\fB\-\-version\fR | \fB\-v\fR)
 
 .SH DESCRIPTION
 \fBjob-queue\fR manages a cross-session job queue.
@@ -18,19 +20,24 @@ For full manual including options, see https://zsh-job-queue.olets.dev/
 The following commands are available:
 
 .IP \(bu
-\fBgenerate\-id\fR
-
-Returns a new job ID.
-
-.IP \(bu
-\fBabbr pop\fR <\fIcommand\fR> <\fIname\fR>
+\fBjob-queue pop\fR <\fIcommand\fR> <\fIscope\fR> <\fIid\fR>
 
 Removes a job from the queue.
 
 .IP \(bu
-\fBabbr push\fR <\fIcommand\fR> <\fIname\fR> <\fIdescription\fR> [<\fInew support ticket url\fR>]
+\fBjob-queue push\fR <\fIcommand\fR> <\fIscope\fR> [<\fIdescription\fR> [<\fInew support ticket url\fR>]]
 
 Adds a job to the queue.
+
+.IP \(bu
+\fBjob-queue\fR (\fBhelp\fR | \fB\-\-help\fR)
+
+Show the manpage.
+
+.IP \(bu
+\fBjob-queue\fR (\fB\-\-version\fR | \fB\-v\fR)
+
+Show the current version.
 
 .SH AUTHORS
 
