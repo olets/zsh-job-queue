@@ -185,7 +185,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
       uuid=$('command' 'uuidgen' 2>/dev/null || cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
 
-      'builtin' 'echo' $EPOCHREALTIME--$uuid
+      'builtin' 'echo' - $EPOCHREALTIME--$uuid
     }
 
     # gets unfunction'd
