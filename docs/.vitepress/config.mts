@@ -223,6 +223,25 @@ export default defineConfig({
 
     nav: [
       {
+        text: "v1",
+        items: [
+          {
+            text: "Major version",
+            link: "",
+          },
+          {
+            text: "v2",
+            link: "https://v2.hometown-prompt.olets.dev",
+            target: "_self",
+          },
+          {
+            text: "v1",
+            link: "/",
+            target: "_self",
+          },
+        ],
+      },
+      {
         text: "Source, Changelog, License",
         link: "https://github.com/olets/zsh-job-queue/",
         target: "_self",
