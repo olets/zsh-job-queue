@@ -4,7 +4,17 @@
 # https://github.com/olets/zsh-job-queue
 # v1.1.1
 # Copyright (c) 2024 Henry Bley-Vroman
-
+#
+# Usage:
+#
+# ```
+# id=$(job-queue generate-id)
+# job-queue push <scope> [<job-description> [<support-ticket-url>]]
+# # waits for its turn in the <scope> queue
+# # do some work
+# job-queue pop $id
+# ```
+#
 # Optionally include a suffix argument when sourcing this file
 #   source path/to/zsh-job-queue.zsh <suffix>
 # The suffix is appended to the names of the file's exported functions.
