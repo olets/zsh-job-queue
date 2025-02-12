@@ -18,11 +18,11 @@ Forked from [zsh-abbr v5](https://v5.zsh-abbr.olets.dev/).
 
 ## Changelog
 
-See the [CHANGELOG](CHANGELOG.md) file.
+Refer to the [CHANGELOG](CHANGELOG.md) file.
 
 ## Roadmap
 
-See the [ROADMAP](ROADMAP.md) file.
+Refer to the [ROADMAP](ROADMAP.md) file.
 
 ## Contributing
 
@@ -30,7 +30,7 @@ Thanks for your interest. Contributions are welcome!
 
 > Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-Check the [Issues](https://github.com/olets/zsh-job-queue/issues) to see if your topic has been discussed before or if it is being worked on. You may also want to check the roadmap (see above).
+Check the [Issues](https://github.com/olets/zsh-job-queue/issues) to see if your topic has been discussed before or if it is being worked on. You may also want to check the roadmap (linked above).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 

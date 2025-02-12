@@ -1,5 +1,5 @@
 ---
-titleTemplate: :title # see also VitePress config
+titleTemplate: :title # also VitePress config
 ---
 
 # zsh-job-queue

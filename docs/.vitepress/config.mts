@@ -192,7 +192,7 @@ export default defineConfig({
   title: TITLE,
   description: DESCRIPTION,
   // https://vitepress.dev/reference/site-config#titletemplate
-  titleTemplate: `:title :: ${TITLE}`, // to change delimiter from default pipe to play nice with Fathom event id format. see also homepage frontmatter
+  titleTemplate: `:title :: ${TITLE}`, // to change delimiter from default pipe to play nice with Fathom event id format. also homepage frontmatter
   // https://vitepress.dev/reference/default-theme-last-updated
   lastUpdated: true,
   markdown: {
