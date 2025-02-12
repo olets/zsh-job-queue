@@ -11,9 +11,12 @@ typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
 # How old does a job have to be to be considered timed out?
 typeset -gi JOB_QUEUE_TIMEOUT_AGE_SECONDS=${JOB_QUEUE_TIMEOUT_AGE_SECONDS:-30}
 
+# Temp dir
 typeset -g _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
+
+# Temp dir for privileged users
 if [[ ${(%):-%#} == '#' ]]; then
-  _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}%/}/
+  _job_queue_tmpdir=${${JOB_QUEUE_PRIVILEGED_TEMPDIR:-${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}}%/}/
 fi
 
 _job_queue:debugger() {
