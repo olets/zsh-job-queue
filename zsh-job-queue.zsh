@@ -8,6 +8,9 @@
 # Log debugging messages?
 typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
 
+# How old does a job have to be to be considered timed out?
+typeset -gi JOB_QUEUE_TIMEOUT_AGE_SECONDS=${JOB_QUEUE_TIMEOUT_AGE_SECONDS:-30}
+
 typeset -g _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
 if [[ ${(%):-%#} == '#' ]]; then
   _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}%/}/
@@ -63,13 +66,11 @@ function _job_queue:push() {
     local job_id
     local job_path
     local support_ticket_url
-    local timeout_age
 
     cmd=$1
     job_id=$2
     job_description=$3
     support_ticket_url=$4
-    timeout_age=30 # seconds
 
     # gets unfunction'd
     function _job_queue:push:add_job() {
@@ -117,7 +118,7 @@ function _job_queue:push() {
 
         next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
 
-        if ((  $next_job_age > $timeout_age )); then
+        if ((  $next_job_age > $JOB_QUEUE_TIMEOUT_AGE_SECONDS )); then
           _job_queue:push:handle_timeout
         fi
 
