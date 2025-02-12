@@ -132,10 +132,21 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         function _job_queue:push:handle_timeout() {
           _job_queue:debugger
 
+          local msg
+
           next_job_path=$_job_queue_tmpdir${scope}/$next_job_id
 
           'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
-          'builtin' 'echo' "The job was related to \`$scope\`'s \`$(cat $next_job_path)\`."
+
+          msg="The job was related to \`$scope\`"
+
+          if [[ -n $job_description ]]; then
+            msg+="'s \`$job_description\`"
+          fi
+
+          msg+="."
+
+          'builtin' 'echo' $msg
           'builtin' 'echo' "This could be the result of manually terminating an activity in \`$scope\`."
 
           if [[ -n $support_ticket_url ]]; then
