@@ -22,20 +22,9 @@ A job is considered to have timed out if it is not `pop`ped within `JOB_QUEUE_TI
 
 Run `job-queue help` for documentation; if the package is installed with Homebrew, `man job-queue` is also available.
 
-## Try it out
 
-1. Open two terminals.
 
-1. In the first, type _but do not accept_
 
-   ```shell
-   id=$(job-queue push testing); sleep 10; job-queue pop testing $id; echo first job done at $(date)
-   ```
 
-1. In the second, type _but do not accept_
 
-   ```shell
-   id=$(job-queue push testing); job-queue pop testing $id; echo second job done at $(date)
-   ```
 
-1. Accept the first terminal's command, and immediately accept the second terminal's command. See that the second terminal's command is blocked (waits for) the first terminal's.

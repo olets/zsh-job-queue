@@ -272,8 +272,8 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: "Usage", link: "/usage" },
-          { text: "Example", link: "/example" },
           { text: "Options", link: "/options" },
+          { text: "Examples", link: "/examples" },
         ],
       },
       {
