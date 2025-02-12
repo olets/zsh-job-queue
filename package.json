@@ -1,6 +1,6 @@
 {
   "name": "zsh-job-queue-docs",
-  "version": "1.1.0-docs.1",
+  "version": "1.1.1",
   "description": "Documentation for zsh-job-queue",
   "packageManager": "bun@1.1.25",
   "scripts": {

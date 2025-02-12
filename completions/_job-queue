@@ -3,7 +3,7 @@
 #  Completion script for zsh-job-queue
 #
 # https://github.com/olets/zsh-job-queue
-# v1.1.0
+# v1.1.1
 # Copyright (c) 2024 Henry Bley-Vroman
 #
 # Licensed under the same license as zsh-job-queue. See zsh-job-queue's LICENSE file
