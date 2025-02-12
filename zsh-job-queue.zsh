@@ -100,7 +100,6 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         local next_job_path
         local job_description
         local job_id
-        local job_path
         local scope
         local support_ticket_url
 
