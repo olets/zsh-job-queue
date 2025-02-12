@@ -5,7 +5,20 @@
 # v1.1.1
 # Copyright (c) 2024 Henry Bley-Vroman
 
-function _job_queue:init() {
+# Optionally include a suffix argument when sourcing this file
+#   source path/to/zsh-job-queue.zsh <suffix>
+# The suffix is appended to the names of the file's exported functions.
+# This can be used, for instance, to distinguish multiple copies
+# of zsh-job-queue.
+#
+# In .zshrc:
+#   source path/to/zsh-job-queue/zsh-job-queue.zsh
+# In a plugin which bundles its own (e.g. Git submodule or subtree) copy:
+#   source ./zsh-job-queue/zsh-job-queue.zsh __my-plugin
+#
+# Refer to zsh-abbr for an example of the latter
+
+function _job_queue:init"${1:-}"() { # this quotation mark to fix syntax highlighting "
   # Log debugging messages?
   typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
 
@@ -21,7 +34,7 @@ function _job_queue:init() {
   fi
 }
 
-function job-queue() {
+function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting "
   emulate -LR zsh
 
   {
@@ -211,5 +224,5 @@ function job-queue() {
   }
 }
 
-_job_queue:init
-unfunction -m _job_queue:init
+_job_queue:init${1:-}
+unfunction -m _job_queue:init${1:-}
