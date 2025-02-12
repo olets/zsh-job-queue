@@ -5,24 +5,26 @@
 # v1.1.1
 # Copyright (c) 2024 Henry Bley-Vroman
 
-# Log debugging messages?
-typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
-
-# How old does a job have to be to be considered timed out?
-typeset -gi JOB_QUEUE_TIMEOUT_AGE_SECONDS=${JOB_QUEUE_TIMEOUT_AGE_SECONDS:-30}
-
-# Temp dir
-typeset -g _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
-
-# Temp dir for privileged users
-if [[ ${(%):-%#} == '#' ]]; then
-  _job_queue_tmpdir=${${JOB_QUEUE_PRIVILEGED_TEMPDIR:-${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}}%/}/
-fi
-
-_job_queue:debugger() {
+function _job_queue:debugger() {
   emulate -LR zsh
 
   (( JOB_QUEUE_DEBUG )) && 'builtin' 'echo' - $funcstack[2]
+}
+
+function _job_queue:init() {
+  # Log debugging messages?
+  typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
+
+  # How old does a job have to be to be considered timed out?
+  typeset -gi JOB_QUEUE_TIMEOUT_AGE_SECONDS=${JOB_QUEUE_TIMEOUT_AGE_SECONDS:-30}
+
+  # Temp dir
+  typeset -g _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
+
+  # Temp dir for privileged users
+  if [[ ${(%):-%#} == '#' ]]; then
+    _job_queue_tmpdir=${${JOB_QUEUE_PRIVILEGED_TEMPDIR:-${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}}%/}/
+  fi
 }
 
 function _job_queue:help() {
@@ -194,4 +196,5 @@ function job-queue() {
   done
 }
 
+_job_queue:init
 job-queue
