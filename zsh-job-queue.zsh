@@ -118,13 +118,14 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           fi
 
           'builtin' 'echo' $job_description > $_job_queue_tmpdir${scope}/$job_id
+          'builtin' 'echo' $support_ticket_url >> $_job_queue_tmpdir${scope}/$job_id
         }
 
         # gets unfunction'd
         function _job_queue:push:next_job_id() {
           # cannot support debug message
 
-          'command' 'ls' -t $_job_queue_tmpdir${scope} | tail -1
+          'command' 'ls' -t $_job_queue_tmpdir${scope} | 'command' 'tail' -1
         }
 
         # gets unfunction'd
@@ -132,15 +133,22 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           _job_queue:debugger
 
           local msg
+          local -a msg_data
+          local msg_description
+          local msg_url
 
           next_job_path=$_job_queue_tmpdir${scope}/$next_job_id
+
+          msg_data=( ${(f)"$('command' 'cat' $next_job_path)"} )
+          msg_description=$msg_data[1]
+          msg_url=$msg_data[2]
 
           'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
 
           msg="The job was related to \`$scope\`"
 
-          if [[ -n $job_description ]]; then
-            msg+="'s \`$job_description\`"
+          if [[ -n $msg_description ]]; then
+            msg+="'s \`$msg_description\`"
           fi
 
           msg+="."
@@ -148,8 +156,8 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           'builtin' 'echo' $msg
           'builtin' 'echo' "This could be the result of manually terminating an activity in \`$scope\`."
 
-          if [[ -n $support_ticket_url ]]; then
-            'builtin' 'echo' "If you believe it reflects bug in \`$scope\`, please report it at $support_ticket_url"
+          if [[ -n $msg_url ]]; then
+            'builtin' 'echo' "If you believe it reflects bug in \`$scope\`, please report it at $msg_url"
           fi
 
           'builtin' 'echo'
