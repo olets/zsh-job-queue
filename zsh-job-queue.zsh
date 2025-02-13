@@ -37,11 +37,14 @@ function _job_queue:init"${1:-}"() { # this quotation mark to fix syntax highlig
   typeset -gi JOB_QUEUE_TIMEOUT_AGE_SECONDS=${JOB_QUEUE_TIMEOUT_AGE_SECONDS:-30}
 
   # Temp dir
-  typeset -g _job_queue_tmpdir=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
+  typeset -g JOB_QUEUE_TMPDIR=${${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue}%/}/
+  typeset -g JOB_QUEUE_PRIVILEGED_TEMPDIR=${${JOB_QUEUE_PRIVILEGED_TEMPDIR:-${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}}%/}/
+
+  typeset -g _job_queue_tmpdir=$JOB_QUEUE_TMPDIR
 
   # Temp dir for privileged users
   if [[ ${(%):-%#} == '#' ]]; then
-    _job_queue_tmpdir=${${JOB_QUEUE_PRIVILEGED_TEMPDIR:-${JOB_QUEUE_TMPDIR:-${${TMPDIR:-/tmp}%/}/zsh-job-queue-privileged-users}}%/}/
+    _job_queue_tmpdir=$JOB_QUEUE_PRIVILEGED_TEMPDIR
   fi
 }
 
