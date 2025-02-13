@@ -4,7 +4,7 @@ titleTemplate: :title # see also VitePress config
 
 # zsh-job-queue
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/olets/zsh-job-queue)
+![GitHub release (latest v1)](https://img.shields.io/github/v/release/olets/zsh-job-queue?filter=v1.*&label=legacy%20release&color=A20707)
 
 ![splash card: the text '% zsh job queue' in a descending, fading waterfall](/zsh-job-queue-card.png)
 
