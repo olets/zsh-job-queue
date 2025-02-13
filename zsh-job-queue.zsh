@@ -29,6 +29,7 @@
 
 function _job_queue:init"${1:-}"() { # this quotation mark to fix syntax highlighting "
   zmodload zsh/datetime
+  zmodload -i zsh/sched
 
   # Log debugging messages?
   typeset -gi JOB_QUEUE_DEBUG=${JOB_QUEUE_DEBUG:-0}
@@ -139,7 +140,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
           next_job_path=$_job_queue_tmpdir${scope}/$next_job_id
 
-          msg_data=( ${(f)"$('command' 'cat' $next_job_path)"} )
+          msg_data=( ${(f)"$('command' 'cat' $next_job_path)"} ) # " this paren for syntax highlighting )
           msg_description=$msg_data[1]
           msg_url=$msg_data[2]
 
@@ -165,20 +166,35 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           'command' 'rm' $next_job_path &>/dev/null
         }
 
+        function _job_queue:push:remove_scheduled_event() {
+          _job_queue:debugger
+
+          # Remove existing event, so that multiple calls to
+          # _job_queue:push:remove_scheduled_event work OK
+          typeset -i i=${"${(@)zsh_scheduled_events#*:*:}"[(I)_job_queue:push:wait_turn:$job_id]}
+          (( i )) && sched -$i
+        }
+
         # gets unfunction'd
         function _job_queue:push:wait_turn() {
+          _job_queue:debugger
           next_job_id=$(_job_queue:push:next_job_id)
 
           while [[ $next_job_id != $job_id ]]; do
+            _job_queue:push:remove_scheduled_event
+
             next_job_id=$(_job_queue:push:next_job_id)
 
             next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
 
             if ((  $next_job_age > $JOB_QUEUE_TIMEOUT_AGE_SECONDS )); then
               _job_queue:push:handle_timeout
+              return 1
             fi
 
-            sleep 0.01
+            [[ $next_job_id != $job_id ]] && {
+              sched +1 _job_queue:push:wait_turn:$job_id
+            }
           done
         }
 
