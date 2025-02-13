@@ -10,10 +10,24 @@ jobs:
     steps:
       - name: Bump primary formula
         uses: mislav/bump-homebrew-formula-action@b3327118b2153c82da63fd9cbf58942146ee99f0 # v3.1
-        if: "contains(github.ref, 'v1')"
+        if: "contains(github.ref, 'v2')"
         with:
-          formula-name: zsh-job-queue
-          formula-path: zsh-job-queue.rb
+          formula-name: zsh-job-queue@2
+          formula-path: zsh-job-queue@2.rb
+          homebrew-tap: olets/homebrew-tap
+          commit-message: |
+            feat({{formulaName}}): publish {{version}}
+
+            Created by https://github.com/mislav/bump-homebrew-formula-action
+        env:
+          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+
+      - name: Bump 2.x formula
+        uses: mislav/bump-homebrew-formula-action@b3327118b2153c82da63fd9cbf58942146ee99f0 # v3.1
+        if: "contains(github.ref, 'v2')"
+        with:
+          formula-name: zsh-job-queue@2
+          formula-path: zsh-job-queue@2.rb
           homebrew-tap: olets/homebrew-tap
           commit-message: |
             feat({{formulaName}}): publish {{version}}
