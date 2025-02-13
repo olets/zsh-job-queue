@@ -1,6 +1,6 @@
 # zsh-job-queue ![GitHub release (latest by date)](https://img.shields.io/github/v/release/olets/zsh-job-queue)
 
-**zsh-job-queue** manages a global (cross-terminal) synchronous job queue.
+**zsh-job-queue** manages global (cross-terminal) synchronous job queues.
 
 &nbsp;
 

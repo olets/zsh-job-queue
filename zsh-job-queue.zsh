@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-# Cross-session job queue manager for zsh
-# https://github.com/olets/zsh-job-queue
+# Cross-session job queues manager for zsh
+# https://zsh-job-queue.olets.dev
 # v1.1.1
 # Copyright (c) 2024 Henry Bley-Vroman
 #

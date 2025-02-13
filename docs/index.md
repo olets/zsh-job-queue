@@ -8,7 +8,7 @@ titleTemplate: :title # also VitePress config
 
 ![splash card: the text '% zsh job queue' in a descending, fading waterfall](/zsh-job-queue-card.png)
 
-**zsh-job-queue** manages a global (cross-terminal) synchronous job queue.
+**zsh-job-queue** manages global (cross-terminal) synchronous job queues.
 
 It's useful if you you have a script that destructively modifies a file and you want to support running the script in multiple terminals in quick succession.
 

@@ -2,21 +2,35 @@
 
 ## Proof of concept
 
-1. Open two terminals.
+1. Open three terminals.
 
 1. In the first, type _but do not accept_
 
    ```shell
-   id=$(job-queue push testing); sleep 10; job-queue pop testing $id; echo first job done at $(date)
+   id=$(job-queue push one-scope); sleep 10; job-queue pop one-scope $id; echo first job done at $(date)
    ```
 
 1. In the second, type _but do not accept_
 
    ```shell
-   id=$(job-queue push testing); job-queue pop testing $id; echo second job done at $(date)
+   id=$(job-queue push one-scope); job-queue pop one-scope $id; echo second job done at $(date)
    ```
 
-1. Accept the first terminal's command, and immediately accept the second terminal's command. See that the second terminal's command is blocked (waits for) the first terminal's.
+1. In the third, type _but do not accept_
+
+   ```shell
+   id=$(job-queue push another-scope); sleep 5; job-queue pop another-scope $id; echo third job done at $(date)
+   ```
+
+1. In the third, type _but do not accept_
+
+   ```shell
+   id=$(job-queue push another-scope); job-queue pop another-scope $id; echo fourth job done at $(date)
+   ```
+
+1. Accept the first terminal's command, then second terminal's command, then the third terminal's command, all quickly one after the other in that order.
+
+1. Confirm that the terminals complete their commands in the order terminal 3, terminal 4, terminal 1, terminal 1. Terminals 1 and 2 used the same global queue as each other, as did terminals 3 and 4. Terminal 4 waited for terminal 3, and terminal 2 waited for terminal 1.
 
 ## Closer to real life
 

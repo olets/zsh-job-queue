@@ -48,6 +48,8 @@ job-queue push <scope> [<job_description> [<support_ticket_url>]]
 
 Enqueue a job in the `<scope>` queue, and do not proceed until it is first in the queue. Outputs a timestamped random id.
 
+You can have as many distinctly-named queues as you like.
+
 The next time a job is pushed to the same scoped queue as the timed out job, a warning message will be logged to the terminal. If provided, `<job_description>` and `<support_ticket_url>` are included in the message.
 
 ### `version`

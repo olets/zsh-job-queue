@@ -3,7 +3,7 @@ import { defineConfig } from "vitepress";
 import { createTitle, normalize } from "vitepress/dist/client/shared.js";
 import markdownItFootnote from "markdown-it-footnote";
 
-const DESCRIPTION = "A global (cross-terminal) synchronous job queue for zsh.";
+const DESCRIPTION = "Global (cross-terminal) synchronous job queues for zsh.";
 const FALLBACK_META_IMAGE = "zsh-job-queue-card.png";
 const TITLE = "zsh-job-queue";
 const ORIGIN = "https://zsh-job-queue.olets.dev";
