@@ -1,3 +1,7 @@
+## [2.0.1](https://github.com/olets/zsh-job-queue/compare/v2.0.0...v2.0.1) (2025-02-13)
+
+CI polish.
+
 # [2.0.0](https://github.com/olets/zsh-job-queue/compare/v1.1.1...v2.0.0) (2025-02-12)
 
 ### Bug Fixes
