@@ -79,7 +79,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
       local scope
       local job_id
 
-      scope=$1 # todo
+      scope=$1
       job_id=$2
 
       'command' 'rm' $_job_queue_tmpdir${scope}/$job_id &>/dev/null
