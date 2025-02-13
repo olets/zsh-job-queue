@@ -223,7 +223,7 @@ export default defineConfig({
 
     nav: [
       {
-        text: "v1",
+        text: "v2",
         items: [
           {
             text: "Major version",
@@ -231,12 +231,12 @@ export default defineConfig({
           },
           {
             text: "v2",
-            link: "https://v2.hometown-prompt.olets.dev",
+            link: "/",
             target: "_self",
           },
           {
             text: "v1",
-            link: "/",
+            link: "https://v1.zsh-job-queue.olets.dev",
             target: "_self",
           },
         ],
