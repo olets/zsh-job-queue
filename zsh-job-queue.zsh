@@ -117,7 +117,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           _job_queue:debugger
 
           if ! [[ -d $_job_queue_tmpdir${scope} ]]; then
-            mkdir -p $_job_queue_tmpdir${scope}
+            'command' 'mkdir' -p $_job_queue_tmpdir${scope}
           fi
 
           'builtin' 'echo' $job_description > $_job_queue_tmpdir${scope}/$job_id
@@ -181,7 +181,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
               _job_queue:push:handle_timeout
             fi
 
-            sleep 0.01
+            'command' 'sleep' 0.01
           done
         }
 
@@ -204,7 +204,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
       local uuid
 
-      uuid=$('command' 'uuidgen' 2>/dev/null || cat /dev/urandom | base64 | tr -dc '0-9a-zA-Z' | head -c36)
+      uuid=$('command' 'uuidgen' 2>/dev/null || 'command' 'cat' /dev/urandom | 'command' 'base64' | 'command' 'tr' -dc '0-9a-zA-Z' | 'command' 'head' -c36)
 
       'builtin' 'echo' - $EPOCHREALTIME--$uuid
     }
