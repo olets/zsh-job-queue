@@ -231,7 +231,7 @@ export default defineConfig({
           },
           {
             text: "v2",
-            link: "https://v2.hometown-prompt.olets.dev",
+            link: "https://v2.zsh-job-queue.olets.dev",
             target: "_self",
           },
           {
