@@ -1,9 +1,11 @@
 <template>
-  <div class="warning custom-block">
-    <p class="custom-block-title">These docs are for the upcoming v2.</p>
+  <div class="tip custom-block">
+    <p class="custom-block-title">
+      These docs are for the recently-released v2.
+    </p>
     <p>
-      If you are or were using v1, read the
-      <a href="./migrating-between-versions.html">migration guide</a>
+      If you are or were using v1, check out the
+      <a href="/migrating-between-versions.html">v1 to v2 migration guide</a>
       and/or read about
       <a href="https://v1.zsh-job-queue.olets.dev/installation.html"
         >pinning v1.x</a
