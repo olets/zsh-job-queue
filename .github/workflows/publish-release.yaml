@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Bump primary formula
-        uses: mislav/bump-homebrew-formula-action@b3327118b2153c82da63fd9cbf58942146ee99f0 # v3.1
+        uses: mislav/bump-homebrew-formula-action@942e550c6344cfdb9e1ab29b9bb9bf0c43efa19b # v3.2
         if: "contains(github.ref, 'v2')"
         with:
           formula-name: zsh-job-queue@2
@@ -23,7 +23,7 @@ jobs:
           COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
 
       - name: Bump 2.x formula
-        uses: mislav/bump-homebrew-formula-action@b3327118b2153c82da63fd9cbf58942146ee99f0 # v3.1
+        uses: mislav/bump-homebrew-formula-action@942e550c6344cfdb9e1ab29b9bb9bf0c43efa19b # v3.2
         if: "contains(github.ref, 'v2')"
         with:
           formula-name: zsh-job-queue@2
@@ -37,7 +37,7 @@ jobs:
           COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
 
       - name: Bump v1.x formula
-        uses: mislav/bump-homebrew-formula-action@b3327118b2153c82da63fd9cbf58942146ee99f0 # v3.1
+        uses: mislav/bump-homebrew-formula-action@942e550c6344cfdb9e1ab29b9bb9bf0c43efa19b # v3.2
         if: "contains(github.ref, 'v1')"
         with:
           formula-name: zsh-job-queue@1
