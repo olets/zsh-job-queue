@@ -2,7 +2,7 @@
 
 # Cross-session job queues manager for zsh
 # https://zsh-job-queue.olets.dev
-# v1.1.1
+# v2.0.0
 # Copyright (c) 2024 Henry Bley-Vroman
 #
 # Usage:
@@ -210,7 +210,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
     function _job_queue:version() {
       emulate -LR zsh
 
-      'builtin' 'printf' "zsh-job-queue version %s\n" 1.1.1
+      'builtin' 'printf' "zsh-job-queue version %s\n" 2.0.0
     }
 
     for opt in "$@"; do
