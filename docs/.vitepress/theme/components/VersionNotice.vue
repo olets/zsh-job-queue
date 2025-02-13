@@ -1,10 +1,11 @@
 <template>
-  <div class="tip custom-block">
-    <p class="custom-block-title">v2 is coming.</p>
+  <div class="warning custom-block">
+    <p class="custom-block-title">
+      These are the docs for a previous major version.
+    </p>
     <p>
       Read the
-      <a
-        href="https://v2.zsh-job-queue.olets.dev/migrating-between-versions.html"
+      <a href="https://zsh-job-queue.olets.dev/migrating-between-versions.html"
         >v1 to v2 migration guide</a
       >
       and/or read about
