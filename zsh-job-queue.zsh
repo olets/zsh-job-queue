@@ -98,9 +98,9 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
       {
         _job_queue:debugger
 
-        local next_job_age
-        local next_job_id
-        local next_job_path
+        local front_of_queue_job_age
+        local front_of_queue_job_id
+        local front_of_queue_job_path
         local job_description
         local job_id
         local scope
@@ -125,7 +125,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         }
 
         # gets unfunction'd
-        function _job_queue:push:next_job_id() {
+        function _job_queue:push:get_front_of_queue_job_id() {
           # cannot support debug message
 
           'command' 'ls' -t $_job_queue_tmpdir${scope} | 'command' 'tail' -1
@@ -140,13 +140,13 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
           local msg_description
           local msg_url
 
-          next_job_path=$_job_queue_tmpdir${scope}/$next_job_id
+          front_of_queue_job_path=$_job_queue_tmpdir${scope}/$front_of_queue_job_id
 
-          msg_data=( ${(f)"$('command' 'cat' $next_job_path)"} )
+          msg_data=( ${(f)"$('command' 'cat' $front_of_queue_job_path)"} ) # this quotation mark to improve syntax highlighting "
           msg_description=$msg_data[1]
           msg_url=$msg_data[2]
 
-          'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${next_job_id%%-*}%%.*}) has timed out."
+          'builtin' 'echo' "job-queue: A job added at $(strftime '%T %b %d %Y' ${${front_of_queue_job_id%%-*}%%.*}) has timed out."
 
           msg="The job was related to \`$scope\`"
 
@@ -165,19 +165,19 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
           'builtin' 'echo'
 
-          'command' 'rm' $next_job_path &>/dev/null
+          'command' 'rm' $front_of_queue_job_path &>/dev/null
         }
 
         # gets unfunction'd
         function _job_queue:push:wait_turn() {
-          next_job_id=$(_job_queue:push:next_job_id)
+          front_of_queue_job_id=$(_job_queue:push:get_front_of_queue_job_id)
 
-          while [[ $next_job_id != $job_id ]]; do
-            next_job_id=$(_job_queue:push:next_job_id)
+          while [[ $front_of_queue_job_id != $job_id ]]; do
+            front_of_queue_job_id=$(_job_queue:push:get_front_of_queue_job_id)
 
-            next_job_age=$(( $EPOCHREALTIME - ${next_job_id%%-*} ))
+            front_of_queue_job_age=$(( $EPOCHREALTIME - ${front_of_queue_job_id%%-*} ))
 
-            if ((  $next_job_age > $JOB_QUEUE_TIMEOUT_AGE_SECONDS )); then
+            if ((  $front_of_queue_job_age > $JOB_QUEUE_TIMEOUT_AGE_SECONDS )); then
               _job_queue:push:handle_timeout
             fi
 
@@ -190,7 +190,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         'builtin' 'echo' - $job_id
       } always {
         unfunction -m _job_queue:push:add_job
-        unfunction -m _job_queue:push:next_job_id
+        unfunction -m _job_queue:push:get_front_of_queue_job_id
         unfunction -m _job_queue:push:handle_timeout
         unfunction -m _job_queue:push:wait_turn
       }
