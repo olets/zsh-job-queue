@@ -52,6 +52,21 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
   emulate -LR zsh
 
   {
+    # _job_queue:clear
+    # gets unfunction'd
+    #
+    # @param {string} scope
+    function _job_queue:clear() {
+      emulate -LR zsh
+
+      _job_queue:debugger
+
+      local scope
+      scope=$1
+
+      rm -rf $_job_queue_tmpdir${scope}
+    }
+
     # gets unfunction'd
     function _job_queue:debugger() {
       emulate -LR zsh
@@ -218,6 +233,11 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
     for opt in "$@"; do
       case $opt in
+        clear)
+            shift
+            _job_queue:clear $@
+            return
+            ;;
         "--help"|\
         help)
           _job_queue:help
@@ -245,6 +265,7 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
       esac
     done
   } always {
+    unfunction -m _job_queue:clear
     unfunction -m _job_queue:debugger
     unfunction -m _job_queue:help
     unfunction -m _job_queue:pop

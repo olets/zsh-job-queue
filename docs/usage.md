@@ -22,6 +22,14 @@ A job is considered to have timed out if it is not `pop`ped within `JOB_QUEUE_TI
 
 ## Commands
 
+### `clear`
+
+```shell
+job-queue clear <scope>
+```
+
+Remove all jobs from the `<scope>` queue.
+
 ### `help`
 
 ```shell
@@ -38,7 +46,7 @@ If the package is installed with Homebrew, `man job-queue` is also available.
 job-queue pop <scope> <id>
 ```
 
-Take a job out of the `<scope>` queue. `<id>` must be the ID of an item in the `<scope>` queue. Get ID from the output of `job-queue push`.
+Remove a job from the `<scope>` queue. `<id>` must be the ID of an item in the `<scope>` queue. Get ID from the output of `job-queue push`.
 
 ### `push`
 
@@ -46,7 +54,7 @@ Take a job out of the `<scope>` queue. `<id>` must be the ID of an item in the `
 job-queue push <scope> [<job_description> [<support_ticket_url>]]
 ```
 
-Enqueue a job in the `<scope>` queue, and do not proceed until it is first in the queue. Outputs a timestamped random id.
+Add a job to the `<scope>` queue, and do not proceed until it is first in the queue. Outputs a timestamped random id.
 
 You can have as many distinctly-named queues as you like.
 
