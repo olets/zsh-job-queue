@@ -218,13 +218,13 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
     for opt in "$@"; do
       case $opt in
-        --help|\
+        "--help"|\
         help)
           _job_queue:help
           return
           ;;
-        --version|\
-        -v)
+        "--version"|\
+        "-v")
           _job_queue:version
           return
           ;;
