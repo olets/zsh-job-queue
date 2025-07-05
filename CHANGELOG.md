@@ -1,3 +1,7 @@
+## [2.1.0](https://github.com/olets/zsh-job-queue/compare/v2.0.2...v2.1.0) (2025-07-05)
+
+- **clear**: add command + documentation ([7d9ae2c](https://github.com/olets/zsh-job-queue/commit/7d9ae2c82f7a6b5db36810eb4f4d0613bd7aebe5))
+
 ## [2.0.2](https://github.com/olets/zsh-job-queue/compare/v2.0.1...v2.0.2) (2025-06-21)
 
 - **cli**: play nice with aliased '--help' [[#1](https://github.com/olets/zsh-job-queue/issues/1)] ([af0dd1e](https://github.com/olets/zsh-job-queue/commit/af0dd1ee1c39a51e1980dc9508efabf4fa8a8d11))
