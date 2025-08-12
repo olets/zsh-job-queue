@@ -7,26 +7,25 @@
 1. In the first, type _but do not accept_
 
    ```shell
-   id=$(job-queue push one-scope); sleep 20; job-queue pop one-scope $id; echo first job done at $(date)
+   REPLY=; job-queue push one-scope; id=$REPLY; sleep 20; job-queue pop one-scope $id; echo first job done at $(date)
    ```
 
 1. In the second, type _but do not accept_
 
    ```shell
-   id=$(job-queue push one-scope); job-queue pop one-scope $id; sleep 1; echo second job done at $(date)
+   REPLY=; job-queue push one-scope; id=$REPLY; job-queue pop one-scope $id; sleep 1; echo second job done at $(date)
    ```
 
 1. In the third, type _but do not accept_
 
    ```shell
-   id=$(job-queue push another-scope); sleep 5; job-queue pop another-scope $id; echo third job done at $(date)
+   REPLY=; job-queue push another-scope; id=$REPLY; sleep 5; job-queue pop another-scope $id; echo third job done at $(date)
    ```
 
-1. In the third, type _but do not accept_
+1. In the fourth, type _but do not accept_
 
    ```shell
-   id=$(job-queue push another-scope); job-queue pop another-scope $id; sleep 1; echo fourth job done at $(date)
-   ```
+   REPLY=; job-queue push another-scope; id=$REPLY; job-queue pop another-scope $id; sleep 1; echo fourth job done at $(date)   ```
 
 1. Accept the first terminal's command, then second terminal's command, then the third terminal's command, then the fourth terminal's, all quickly one after the other in that order.
 
@@ -62,9 +61,13 @@ Instead, do something like
 # load zsh-job-queue
 
 myfunction() {
+  local REPLY
   local file=~/myfile.txt
   local scope=$funcstack[1] # name of the immediate parent function, here `"myfunction"`
-  local id=$(job-queue push myfunction)
+
+  job-queue push myfunction
+
+  local id=$REPLY
 
   # if there any jobs ahead of this one in the 'myfunction' queue
   # the script pauses here until they have been removed from the queue
