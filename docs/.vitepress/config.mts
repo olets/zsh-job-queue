@@ -230,6 +230,11 @@ export default defineConfig({
             link: "",
           },
           {
+            text: "v3",
+            link: "https://v3.zsh-job-queue.olets.dev",
+            target: "_self",
+          },
+          {
             text: "v2",
             link: "/",
             target: "_self",

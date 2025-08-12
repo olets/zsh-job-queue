@@ -1,14 +1,15 @@
 <template>
   <div class="tip custom-block">
-    <p class="custom-block-title">
-      These docs are for the recently-released v2.
-    </p>
+    <p class="custom-block-title">v2 is coming.</p>
     <p>
-      If you are or were using v1, check out the
-      <a href="/migrating-between-versions.html">v1 to v2 migration guide</a>
+      Read the
+      <a
+        href="https://v3.zsh-job-queue.olets.dev/migrating-between-versions.html"
+        >v2 to v3 migration guide</a
+      >
       and/or read about
-      <a href="https://v1.zsh-job-queue.olets.dev/installation.html"
-        >pinning v1.x</a
+      <a href="https://v2.zsh-job-queue.olets.dev/installation.html"
+        >pinning v2.x</a
       >.
     </p>
   </div>
