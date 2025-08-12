@@ -223,7 +223,7 @@ export default defineConfig({
 
     nav: [
       {
-        text: "v2",
+        text: "v3",
         items: [
           {
             text: "Major version",
@@ -231,12 +231,12 @@ export default defineConfig({
           },
           {
             text: "v3",
-            link: "https://v3.zsh-job-queue.olets.dev",
+            link: "/",
             target: "_self",
           },
           {
             text: "v2",
-            link: "/",
+            link: "https://v2.zsh-job-queue.olets.dev",
             target: "_self",
           },
           {
