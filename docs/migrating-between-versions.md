@@ -1,6 +1,6 @@
 # Migrating between versions
 
-## Migrating from v1
+## Migrating from v2
 
 - The `mktemp`-like workflow has been dropped in favor of a `REPLY`-based on. Replace all instances of
 
