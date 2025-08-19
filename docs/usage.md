@@ -9,7 +9,8 @@
 These should be done in immediate succession, like so:
 
 ```shell
-id=$(job-queue push my-scope)
+job-queue push my-scope
+id=$REPLY
 
 # do work here
 
@@ -52,6 +53,7 @@ Remove a job from the `<scope>` queue. `<id>` must be the ID of an item in the `
 
 ```shell
 job-queue push <scope> [<job_description> [<support_ticket_url>]]
+id=$REPLY
 ```
 
 Add a job to the `<scope>` queue, and do not proceed until it is first in the queue. Outputs a timestamped random id.
