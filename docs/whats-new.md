@@ -1,12 +1,12 @@
 # What's new?
 
-Highlights in 2.x
+Highlights in 3.x
 
-- <Badge type="warning">Since 2.0.0</Badge> `mktemp`-like workflow
+- <Badge type="warning">Since 3.0.0</Badge> `REPLY`-based `push` workflow
 
   ```shell
-  id=$(job-queue generate-id) # [!code --]
-  job-queue push my-scope $id # [!code --]
-  id=$(job-queue push my-scope) # [!code ++]
+  id=$(job-queue push my-scope) # [!code --]
+  job-queue push my-scope # [!code ++]
+  id=$REPLY # [!code ++]
   job-queue pop $id
   ```

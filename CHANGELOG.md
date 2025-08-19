@@ -1,3 +1,9 @@
+# [3.0.0](https://github.com/olets/zsh-job-queue/compare/v2.1.0...v3.0.0) (2025-08-19)
+
+### Features
+
+- **push,generate-id:** use REPLY variable pattern [[#2](https://github.com/olets/zsh-job-queue/issues/2)] ([7a235b3](https://github.com/olets/zsh-job-queue/commit/7a235b34d7a741c21ffa3d5ec82243f2b8a0beeb))
+
 ## [2.1.0](https://github.com/olets/zsh-job-queue/compare/v2.0.2...v2.1.0) (2025-07-05)
 
 - **clear**: add command + documentation ([7d9ae2c](https://github.com/olets/zsh-job-queue/commit/7d9ae2c82f7a6b5db36810eb4f4d0613bd7aebe5))

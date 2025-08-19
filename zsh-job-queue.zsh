@@ -2,7 +2,7 @@
 
 # Cross-session job queues manager for zsh
 # https://zsh-job-queue.olets.dev
-# v2.1.0
+# v3.0.0
 # Copyright (c) 2024 Henry Bley-Vroman
 #
 # Usage:
@@ -121,7 +121,8 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
         local scope
         local support_ticket_url
 
-        job_id=$(_job_queue:generate-id)
+        _job_queue:generate-id # sets REPLY variable
+        job_id=$REPLY
 
         scope=$1
         job_description=$2
@@ -202,7 +203,6 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
         _job_queue:push:add_job
         _job_queue:push:wait_turn
-        'builtin' 'echo' - $job_id
       } always {
         unfunction -m _job_queue:push:add_job
         unfunction -m _job_queue:push:get_front_of_queue_job_id
@@ -221,14 +221,14 @@ function job-queue"${1:-}"() { # this quotation mark to fix syntax highlighting 
 
       uuid=$('command' 'uuidgen' 2>/dev/null || 'command' 'cat' /dev/urandom | 'command' 'base64' | 'command' 'tr' -dc '0-9a-zA-Z' | 'command' 'head' -c36)
 
-      'builtin' 'echo' - $EPOCHREALTIME--$uuid
+      REPLY="$EPOCHREALTIME--$uuid"
     }
 
     # gets unfunction'd
     function _job_queue:version() {
       emulate -LR zsh
 
-      'builtin' 'printf' "zsh-job-queue version %s\n" 2.1.0
+      'builtin' 'printf' "zsh-job-queue version %s\n" 3.0.0
     }
 
     for opt in "$@"; do
