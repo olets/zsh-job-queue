@@ -1,6 +1,8 @@
 <template>
   <div class="tip custom-block">
-    <p class="custom-block-title">These docs are for the upcoming v3.</p>
+    <p class="custom-block-title">
+      These docs are for the recently-released v3.
+    </p>
     <p>
       If you are or were using v2, check out the
       <a href="/migrating-between-versions.html">v2 to v3 migration guide</a>
