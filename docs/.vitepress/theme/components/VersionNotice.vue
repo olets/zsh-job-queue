@@ -1,6 +1,8 @@
 <template>
-  <div class="tip custom-block">
-    <p class="custom-block-title">v2 is coming.</p>
+  <div class="warning custom-block">
+    <p class="custom-block-title">
+      These are the docs for a previous major version.
+    </p>
     <p>
       Read the
       <a
