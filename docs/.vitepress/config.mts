@@ -84,6 +84,14 @@ export default defineConfig({
     [
       "script",
       {
+        src: "https://loose-saluki.pikapod.net/script.js",
+        "data-website-id": "a23563c7-496b-4e84-a3b6-93f7a9ae3b65",
+        defer: "true",
+      },
+    ],
+    [
+      "script",
+      {
         src: "/js/analytics.js",
       },
     ],

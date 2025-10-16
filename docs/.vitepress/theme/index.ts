@@ -5,7 +5,7 @@ import DefaultTheme from "vitepress/theme";
 import "./style.css";
 import Footer from "./components/Footer.vue";
 import VersionNotice from "./components/VersionNotice.vue";
-import { trackLinksAndFathomEvents } from "./analytics";
+import { trackLinksAndTrackedEvents } from "./analytics";
 import { scrollableRegionsHaveKeyboardAccess } from "./accessibility";
 
 export default {
@@ -17,7 +17,7 @@ export default {
       "doc-bottom": () => h(Footer),
       "layout-bottom": () => {
         scrollableRegionsHaveKeyboardAccess();
-        trackLinksAndFathomEvents();
+        trackLinksAndTrackedEvents();
       },
     });
   },
